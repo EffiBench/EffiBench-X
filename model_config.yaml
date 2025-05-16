@@ -1,0 +1,128 @@
+# Model configuration file for solution generation
+# Format: model_name: {verbose_name: <display name>, rate_limit: <number>, open_source: <bool>}
+
+### Open Source Models ###
+
+# DeepSeek
+deepseek-chat:
+  verbose_name: "DeepSeek-V3-0324"
+  rate_limit: 100
+  open_source: true
+deepseek-reasoner:
+  verbose_name: "DeepSeek-R1"
+  rate_limit: 100
+  open_source: true
+
+# Llama
+llama-4-scout:
+  verbose_name: "Llama-4-Scout-17B-16E-Instruct"
+  rate_limit: 20
+  open_source: true
+llama-4-maverick:
+  verbose_name: "Llama-4-Maverick-17B-128E-Instruct"
+  rate_limit: 20
+  open_source: true
+
+# Qwen
+qwen3-8b:
+  verbose_name: "Qwen3-8B"
+  rate_limit: 20
+  open_source: true
+qwen3-14b:
+  verbose_name: "Qwen3-14B"
+  rate_limit: 20
+  open_source: true
+qwen3-32b:
+  verbose_name: "Qwen3-32B"
+  rate_limit: 20
+  open_source: true
+qwen2.5-coder-7b-instruct:
+  verbose_name: "Qwen2.5-Coder-7B-Instruct"
+  rate_limit: 20
+  open_source: true
+qwen2.5-coder-14b-instruct:
+  verbose_name: "Qwen2.5-Coder-14B-Instruct"
+  rate_limit: 20
+  open_source: true
+qwen2.5-coder-32b-instruct:
+  verbose_name: "Qwen2.5-Coder-32B-Instruct"
+  rate_limit: 20
+  open_source: true
+
+# QwQ
+qwq-32b:
+  verbose_name: "QwQ-32B"
+  rate_limit: 10
+  open_source: true
+
+# Gemma
+gemma-3-4b-it:
+  verbose_name: "Gemma-3-4B-It"
+  rate_limit: 20
+  open_source: true
+gemma-3-12b-it:
+  verbose_name: "Gemma-3-12B-It"
+  rate_limit: 15
+  open_source: true
+gemma-3-27b-it:
+  verbose_name: "Gemma-3-27B-It"
+  rate_limit: 15
+  open_source: true
+
+# Phi
+phi-4:
+  verbose_name: "Phi-4"
+  rate_limit: 20
+  open_source: true
+phi-4-reasoning:
+  verbose_name: "Phi-4-Reasoning"
+  rate_limit: 50
+  open_source: true
+phi-4-reasoning-plus:
+  verbose_name: "Phi-4-Reasoning-Plus"
+  rate_limit: 160
+  open_source: true
+
+### Proprietary Models ###
+
+# OpenAI
+gpt-4o-mini-2024-07-18:
+  verbose_name: "GPT-4o-mini"
+  rate_limit: 100
+  open_source: false
+gpt-4o-2024-11-20:
+  verbose_name: "GPT-4o"
+  rate_limit: 100
+  open_source: false
+
+# Anthropic
+claude-3-5-haiku-20241022:
+  verbose_name: "Claude-3.5-Haiku"
+  rate_limit: 50
+  open_source: false
+claude-3-7-sonnet-20250219:
+  verbose_name: "Claude-3.7-Sonnet"
+  rate_limit: 50
+  open_source: false
+
+# Google
+gemini-2.0-flash:
+  verbose_name: "Gemini-2.0-flash"
+  rate_limit: 50
+  open_source: false
+gemini-2.0-flash-lite:
+  verbose_name: "Gemini-2.0-flash-lite"
+  rate_limit: 50
+  open_source: false
+gemini-2.0-flash-thinking-exp-01-21:
+  verbose_name: "Gemini-2.0-flash-Thinking"
+  rate_limit: 50
+  open_source: false
+gemini-2.5-flash-preview-04-17:
+  verbose_name: "Gemini-2.5-flash"
+  rate_limit: 50
+  open_source: false
+gemini-2.5-pro-exp-03-25:
+  verbose_name: "Gemini-2.5-pro"
+  rate_limit: 20
+  open_source: false

@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/qyhfrank/llm-sandbox.git
+	branch = main
+	commit = bbeea44cce628c6841486c882fa94c94cffa00fc
+	parent = 75723b6972f003bb99f893710e8b0da01ba5ab76
+	method = merge
+	cmdver = 0.4.9

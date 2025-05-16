@@ -1,0 +1,17 @@
+tqdm
+numpy
+click
+psutil
+docker
+openai
+fastapi
+uvicorn
+pydantic
+requests
+markdownify
+python-dotenv
+ruamel.yaml
+datasets
+huggingface-hub
+-e .
+-e third_party/llm-sandbox

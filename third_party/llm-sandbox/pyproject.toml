@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "llm-sandbox"
+version = "0.2.3"
+description = "Lightweight and portable LLM sandbox runtime (code interpreter) Python library"
+authors = ["Duy Huynh <vndee.huynh@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/vndee/llm-sandbox"
+repository = "https://github.com/vndee/llm-sandbox"
+packages = [
+    { include = "llm_sandbox" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+docker = "^7.1.0"
+kubernetes = "^30.1.0"
+podman = "^5.2.0"
+
+[tool.poetry.extras]
+docker = ["docker"]
+kubernetes = ["kubernetes"]
+podman = ["podman"]
+minimal = []
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+pre-commit = "^3.7.1"
+langchain = "^0.2.7"
+langchain-openai = "^0.1.15"
+langchainhub = "^0.1.20"
+llama-index = "^0.10.54.post1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
