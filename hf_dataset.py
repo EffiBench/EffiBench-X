@@ -6,7 +6,26 @@ from tqdm import tqdm
 from pathlib import Path
 
 from huggingface_hub import HfApi
+import datasets
 from datasets import load_dataset, Dataset
+
+def _type_name(value):
+    return "none" if value is None else type(value).__name__
+
+def _collect_type_stats(records, max_records=None):
+    stats = {}
+    limit = len(records)
+    for i in range(limit):
+        obj = records[i]
+        if not isinstance(obj, dict):
+            continue
+        for k, v in obj.items():
+            t = _type_name(v)
+            if k not in stats:
+                stats[k] = {}
+            stats[k][t] = stats[k].get(t, 0) + 1
+    return stats
+
 
 @click.group()
 def cli():
@@ -17,7 +36,8 @@ def cli():
 @click.argument("dataset_dir", type=click.Path(file_okay=False, dir_okay=True, path_type=Path, exists=True), default="data/dataset", required=False)
 @click.option("--repo-id", "-r", type=str, default="EffiBench/effibench-x", help="Hugging Face dataset repository id.")
 @click.option("--token", "-t", type=str, help="Hugging Face API token. By default reads HUGGINGFACEHUB_API_TOKEN env var.")
-def upload(dataset_dir, repo_id, token):
+@click.option("--inspect-only", is_flag=True, default=False, help="Inspect field types and exit without uploading.")
+def upload(dataset_dir, repo_id, token, inspect_only):
     """Upload local dataset directory to Hugging Face Hub."""
     # Merge all JSON files into a single JSONL
     files = sorted(dataset_dir.glob("*.json"))
@@ -32,6 +52,27 @@ def upload(dataset_dir, repo_id, token):
             all_data.append(obj)
         tmp_path = tmp.name
 
+    # Inspect schema to detect mixed-type fields
+    stats = _collect_type_stats(all_data)
+    mixed_keys = []
+    for k, counts in stats.items():
+        non_none_types = [t for t in counts.keys() if t != "none"]
+        if len(non_none_types) > 1:
+            mixed_keys.append(k)
+
+    if inspect_only:
+        click.echo("Field type summary (scanned all records):")
+        for k in sorted(stats.keys()):
+            counts = stats[k]
+            parts = [f"{t}:{n}" for t, n in sorted(counts.items(), key=lambda x: x[0])]
+            flag = " [MIXED]" if k in mixed_keys else ""
+            click.echo(f"- {k}: {' | '.join(parts)}{flag}")
+        os.remove(tmp_path)
+        return
+
+    if mixed_keys:
+        click.echo("Warning: Detected mixed-type fields which may cause Arrow type errors: " + ", ".join(sorted(mixed_keys)))
+
     api = HfApi()
     api.create_repo(repo_id=repo_id, repo_type="dataset", exist_ok=True, token=token)
     
@@ -43,7 +84,7 @@ def upload(dataset_dir, repo_id, token):
         repo_id=repo_id,
         split="test",
         token=token,
-        max_shard_size="500MB",
+        max_shard_size="200MB"
     )
     
     os.remove(tmp_path)
@@ -70,7 +111,7 @@ def download(dataset_dir, repo_id, token):
         filename = f"{source}_{problem_id}_{title_slug}.json"
         out_file = dataset_dir / filename
         with open(out_file, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
     click.echo("Download and unpack completed successfully.")
 
 if __name__ == "__main__":

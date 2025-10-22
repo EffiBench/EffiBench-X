@@ -105,7 +105,7 @@ Please kindly consider citing our paper if you find this repository helpful in y
 ```bibtex
 @article{qing2025effibench,
   title={EffiBench-X: A Multi-Language Benchmark for Measuring Efficiency of LLM-Generated Code},
-  author={Qing, Yuhao and Zhu, Boyu and Du, Mingzhe and Guo, Zhijiang and Zhuo, Terry Yue and Zhang, Qianru and Zhang, Jie M and Cui, Heming and Yiu, Siu-Ming and Huang, Dong and others},
+  author={Qing, Yuhao and Zhu, Boyu and Du, Mingzhe and Guo, Zhijiang and Zhuo, Terry Yue and Zhang, Qianru and Zhang, Jie M and Cui, Heming and Yiu, Siu-Ming and Huang, Dong and Ng, See-Kiong and Tuan, Luu Anh},
   journal={Advances in neural information processing systems},
   year={2025}
 }
