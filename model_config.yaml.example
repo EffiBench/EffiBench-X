@@ -1,0 +1,49 @@
+# Model Configuration Example
+# 
+# This file configures the available models for solution generation and evaluation.
+# Copy this file to 'model_config.yaml' and customize it for your needs.
+#
+# Format:
+#   model_name:                    # The model identifier (e.g., API model name or local model path)
+#     verbose_name: <string>       # Human-readable display name for the model
+#     rate_limit: <number>         # Per-model concurrency: max worker threads (not RPS/RPM throttling)
+#     open_source: <boolean>       # Whether the model is open source (true/false)
+
+### Open Source Models ###
+
+# Example: DeepSeek models
+deepseek-chat:
+  verbose_name: "DeepSeek-V3"
+  rate_limit: 100                  # Higher rate limit for faster inference
+  open_source: true
+# Add more open source models as needed
+
+### Proprietary Models ###
+
+# Example: OpenAI GPT models
+gpt-4o-mini-2024-07-18:
+  verbose_name: "GPT-4o-mini"
+  rate_limit: 100                  # Adjust based on your API tier
+  open_source: false
+# Add more proprietary models as needed
+
+### Usage Notes ###
+# 
+# - The model_name (key) should match the identifier used by your API provider
+#   or the model name in your local inference setup
+#
+# - verbose_name is used for logging and display purposes
+#
+# - rate_limit controls per-model concurrency during config-driven runs.
+#   It becomes the n_workers passed to the ThreadPoolExecutor for that model.
+#   This is NOT a time-based limiter (no requests-per-second/minute throttling).
+#   In single-model runs (using --model), use --n-workers to set concurrency.
+#   Adjust based on:
+#   * Your API tier/quota and provider concurrency caps
+#   * Model latency/inference speed
+#   * Available CPU/network resources on the runner
+#
+# - open_source flag is used for filtering and analysis purposes
+#
+# - You can organize models by provider, family, or any logical grouping using
+#   comments to improve readability
