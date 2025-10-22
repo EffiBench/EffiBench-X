@@ -1,3 +1,6 @@
+data/
+CLAUDE.md
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,python
 
@@ -226,5 +229,3 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,python
-
-**/.claude/settings.local.json
