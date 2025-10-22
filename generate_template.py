@@ -177,9 +177,9 @@ def process_problem(problem_file: Path, output_dir: Path, prototype_model: str, 
     if isinstance(output_data.get("generated_tests", None), str):
         output_data["generated_tests"] = json.loads(output_data["generated_tests"])
     
-    # remove test_runners if problem_type is io
+    # For IO problems, keep the key but set it to None (dataset contract)
     if problem_type == "io":
-        output_data.pop("test_runners", None)
+        output_data["test_runners"] = None
     
     # Generate test template based on problem type
     messages = []
@@ -446,7 +446,7 @@ def generate(problem_dir: Path, output_dir: Path, prototype_model: str, fix_mode
                 continue
             
             output_data = load_json_file(output_file)
-            # stdio problems don't have test runners; functional problems have at least one test runner
+            # Functional problems: `test_runners` exists and is a dict (per dataset contract)
             if "test_runners" in output_data: # functional problems
                 suffix = ".json" if all(output_data["test_runners"].get(lang) for lang in target_langs) else ".progress"
                 if output_file.suffix != suffix:
@@ -684,7 +684,8 @@ def finalize(problem_dir: Path, template_dir: Path, output_dir: Path, prototype_
                 continue
             
             output_data = load_json_file(output_file)
-            if "test_runners" not in output_data: # io problems
+            # IO problems: `test_runners` must exist and be null (per dataset contract)
+            if output_data.get("test_runners") is None: # io problems
                 suffix = ".json" if all((output_data["solutions"].get(lang) or {}).get("code") for lang in target_langs) else ".progress"
                 if output_file.suffix != suffix:
                     output_file.rename(output_file.with_suffix(suffix))
